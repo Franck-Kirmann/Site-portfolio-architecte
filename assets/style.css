@@ -272,3 +272,8 @@ footer nav ul {
   justify-content: flex-end;
   margin: 2em;
 }
+
+.no-style {
+  text-decoration: none;
+  color: black;
+}
