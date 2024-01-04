@@ -22,6 +22,8 @@ const displayworks = () => {
   });
 };
 
+getworks();
+
 //filtre
 let categories = [];
 
@@ -40,10 +42,56 @@ const createInputElements = () => {
     filter.appendChild(input);
     input.type = "submit";
     input.value = categories[i].name;
+
+    input.addEventListener("click", () => {
+      handleInputClick(categories[i].id, categories[i].name);
+      const allInputs = document.querySelectorAll(".categories input");
+
+      allInputs.forEach((otherInput) => {
+        otherInput.classList.remove("selected");
+      });
+
+      input.classList.add("selected");
+      const categorieId = categories[i].id;
+      displayWorksByCategorie(categorieId);
+    });
   }
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-  getworks();
-  getcategories();
+const FilterAll = document.getElementById("FilterAll");
+
+FilterAll.addEventListener("click", (input) => {
+  displayworks();
+  let i = 0;
+  input.className = "";
+  console.log("jai cliquer sur tous", [i]);
+
+  const allInputs = document.querySelectorAll(".categories input");
+  allInputs.forEach((input) => {
+    input.classList.remove("selected");
+  });
+
+  FilterAll.classList.add("selected");
 });
+
+getcategories();
+
+const handleInputClick = (categorieId, categorieName) => {
+  console.log("Input cliqué : id:", categorieId, ", name :", categorieName);
+};
+
+const displayWorksByCategorie = (categorieId) => {
+  const filteredWorks = Works.filter((work) => work.categoryId === categorieId);
+  displayFilteredWorks(filteredWorks);
+};
+
+const displayFilteredWorks = (filteredWorks) => {
+  gallery.innerHTML = "";
+
+  filteredWorks.forEach((element) => {
+    gallery.innerHTML += `<figure>
+        <img src=${element.imageUrl} alt="${element.title}">
+            <figcaption>${element.title}</figcaption>
+    </figure>`;
+  });
+};

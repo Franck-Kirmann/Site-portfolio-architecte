@@ -262,9 +262,10 @@ input[type="submit"] {
   border-radius: 60px;
 }
 
-input[type="submit"] .selected {
+input[type="submit"].selected {
   color: white;
   background-color: #1d6154;
+  border: none;
 }
 footer nav ul {
   display: flex;
