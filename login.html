@@ -15,22 +15,23 @@
   </head>
   <body>
     <header>
-      <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-      <nav>
-        <ul>
-          <a href="index.html#portfolio" class="no-style">
-            <li>projets</li>
-          </a>
-          <a href="index.html#contact" class="no-style">
-            <li>contact</li>
-          </a>
-          <a href="login.html" class="no-style">
-            <li>login</li>
-          </a>
-
-          <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
-        </ul>
-      </nav>
+      <div class="head">
+        <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+        <nav>
+          <ul>
+            <a href="index.html#portfolio" class="no-style">
+              <li>projets</li>
+            </a>
+            <a href="index.html#contact" class="no-style">
+              <li>contact</li>
+            </a>
+            <a href="login.html" class="no-style">
+              <li>login</li>
+            </a>
+            <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
+          </ul>
+        </nav>
+      </div>
     </header>
     <section id="contact">
       <h2>Log in</h2>
@@ -39,7 +40,12 @@
         <input type="email" name="email" id="email" required />
         <label for="password">Mot de passe</label>
         <input type="password" id="password" name="password" required />
-        <input class="selected" type="submit" value="Se connecter" />
+        <input
+          id="loginBTN"
+          class="selected"
+          type="button"
+          value="Se connecter"
+        />
         <div id="error-message"></div>
         <a href="" class="mdp"><p>Mot de passe oublié</p></a>
       </form>
@@ -52,5 +58,6 @@
       </nav>
     </footer>
     <script src="assets/js/login.js"></script>
+    <script src="assets/js/function.js"></script>
   </body>
 </html>

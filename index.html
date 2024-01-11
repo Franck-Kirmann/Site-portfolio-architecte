@@ -10,12 +10,16 @@
       href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <meta name="description" content="" />
     <link rel="stylesheet" href="./assets/style.css" />
     <link rel="stylesheet" href="login.html"/>
   </head>
   <body>
     <header>
+    <div id="EditMode" class="DiplayOff">
+    </div>
+    <div class="head">
       <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
       <nav>
         <ul>
@@ -25,12 +29,16 @@
           <a href="#contact" class="no-style">
             <li>contact</li>
           </a> 
-          <a href="login.html" class="no-style">
-            <li>login</li>
-          </a>
+    <a href="login.html" class="no-style" id="loginBtn">
+      <li>login</li>
+    </a>
+        <a href="" class="no-style" id="logoutBtn">
+      <li>logout</li>
+    </a>
           <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
         </ul>
       </nav>
+    </div>
     </header>
     <main>
       <section id="introduction">
@@ -57,10 +65,24 @@
         </article>
       </section>
       <section id="portfolio">
-        <h2>Mes Projets</h2>
-        <div class="categories">
-          <input type="submit" class="selected" value="Tous" id="FilterAll"></input>
+        <div id="Projets">
+          <h2>Mes Projets</h2>
+          <div class="modifier" id="modifier"></div>
+          <div class="categories"> 
+            <input type="submit" class="selected" value="Tous" id="FilterAll"></input>
+          </div>
         </div>
+        <div id="modal" class="DiplayOff">
+          <div class="modalContainer">
+            <button class="modalClose">
+              <i class="fa-solid fa-xmark" ></i>
+            </button>
+            <p class="modalTitle">Galerie photo</p>
+            <div class="ModalGallery"></div>
+            <hr>
+            <input type="submit" value="Ajouter une photo" class="AddPicture">
+          </div>
+          </div>
         <div class="gallery"></div>
       </section>
       <section id="contact">
@@ -85,6 +107,7 @@
         </ul>
       </nav>
     </footer>
+    <script src="assets/js/function.js"></script>
     <script src="assets/js/index.js"></script>
   </body>
 </html>

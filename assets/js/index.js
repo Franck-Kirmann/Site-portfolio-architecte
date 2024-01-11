@@ -11,52 +11,12 @@ const getworks = () => {
     });
 };
 
-const displayworks = () => {
-  gallery.innerHTML = "";
-
-  Works.forEach((element) => {
-    gallery.innerHTML += `<figure>
-        <img src=${element.imageUrl} alt="${element.title}">
-            <figcaption>${element.title}</figcaption>
-    </figure>`;
-  });
-};
-
 getworks();
 
 //filtre
 let categories = [];
 
-const getcategories = () => {
-  fetch("http://localhost:5678/api/categories")
-    .then((cat) => cat.json())
-    .then((datacat) => {
-      categories = datacat;
-      createInputElements();
-    });
-};
 const filter = document.querySelector(".categories");
-const createInputElements = () => {
-  for (let i = 0; i < categories.length; i++) {
-    const input = document.createElement("input");
-    filter.appendChild(input);
-    input.type = "submit";
-    input.value = categories[i].name;
-
-    input.addEventListener("click", () => {
-      handleInputClick(categories[i].id, categories[i].name);
-      const allInputs = document.querySelectorAll(".categories input");
-
-      allInputs.forEach((otherInput) => {
-        otherInput.classList.remove("selected");
-      });
-
-      input.classList.add("selected");
-      const categorieId = categories[i].id;
-      displayWorksByCategorie(categorieId);
-    });
-  }
-};
 
 const FilterAll = document.getElementById("FilterAll");
 
@@ -74,24 +34,63 @@ FilterAll.addEventListener("click", (input) => {
   FilterAll.classList.add("selected");
 });
 
-getcategories();
+//login
+const EditMode = document.getElementById("EditMode");
+const logoutBtn = document.getElementById("logoutBtn");
+const loginBtn = document.getElementById("loginBtn");
+const modifier = document.getElementById("modifier");
 
-const handleInputClick = (categorieId, categorieName) => {
-  console.log("Input cliqué : id:", categorieId, ", name :", categorieName);
-};
+document.addEventListener("DOMContentLoaded", function () {
+  if (isLogin()) {
+    console.log("online");
+    diplayEditModeOn();
+    login();
+    modifierOn();
+    ProjetsOn();
+  } else {
+    console.log("offline");
+    diplayEditModeOff();
+    const getcategories = () => {
+      fetch("http://localhost:5678/api/categories")
+        .then((cat) => cat.json())
+        .then((datacat) => {
+          categories = datacat;
+          createInputElements();
+        });
+    };
+    logout();
+    getcategories();
+    modifierOff();
+    ProjetsOff();
+  }
+});
 
-const displayWorksByCategorie = (categorieId) => {
-  const filteredWorks = Works.filter((work) => work.categoryId === categorieId);
-  displayFilteredWorks(filteredWorks);
-};
+logoutBtn.addEventListener("click", function () {
+  sessionStorage.removeItem("token");
+  location.reload();
+});
+const Projets = document.getElementById("Projets");
+const modal = document.getElementById("modal");
+const modalClose = document.querySelector(".modalClose");
+const ModalGallery = document.querySelector(".ModalGallery");
 
-const displayFilteredWorks = (filteredWorks) => {
-  gallery.innerHTML = "";
-
-  filteredWorks.forEach((element) => {
-    gallery.innerHTML += `<figure>
-        <img src=${element.imageUrl} alt="${element.title}">
-            <figcaption>${element.title}</figcaption>
-    </figure>`;
+document.addEventListener("DOMContentLoaded", function () {
+  const ModifierBtn = document.querySelector(".ModifierBtn");
+  ModifierBtn.addEventListener("click", function () {
+    modal.className = "modal";
   });
+});
+
+modalClose.addEventListener("click", function () {
+  modal.className = "DiplayOff";
+});
+
+const getModalWorks = () => {
+  fetch("http://localhost:5678/api/works/")
+    .then((res) => res.json())
+    .then((data) => {
+      Works = data;
+      displayModalworks();
+    });
 };
+getModalWorks();
