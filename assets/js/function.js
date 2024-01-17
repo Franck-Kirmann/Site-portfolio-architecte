@@ -66,19 +66,19 @@ const diplayEditModeOn = () => {
 };
 const diplayEditModeOff = () => {
   EditMode.innerHTML = "";
-  EditMode.className = "DiplayOff";
+  EditMode.className = "DisplayOff";
 };
 
 const login = () => {
   loginBtn.style.display = "none";
   logoutBtn.style.display = "inline-block";
-  FilterAll.classList.add("DiplayOff");
+  FilterAll.classList.add("DisplayOff");
 };
 
 const logout = () => {
   loginBtn.style.display = "inline-block";
   logoutBtn.style.display = "none";
-  FilterAll.classList.remove("DiplayOff");
+  FilterAll.classList.remove("DisplayOff");
 };
 const ProjetsOn = () => {
   Projets.className = "Projets";
@@ -102,9 +102,63 @@ const displayModalworks = () => {
   ModalGallery.innerHTML = "";
 
   Works.forEach((element) => {
-    ModalGallery.innerHTML += `<div class="imageContainer">
-  <img src="${element.imageUrl}" alt="${element.title}" class="ModalImg">
-  <button class="deleted"><i class="fa-solid fa-trash-can"></i></button>
-</div>`;
+    const imageContainer = document.createElement("div");
+    const ModalImg = document.createElement("img");
+    const deletedBtn = document.createElement("button");
+    deletedBtn.innerHTML = "<i class='fa-solid fa-trash-can'>";
+
+    ModalGallery.appendChild(imageContainer);
+    imageContainer.className = "imageContainer";
+
+    imageContainer.appendChild(ModalImg);
+    ModalImg.className = "ModalImg";
+    ModalImg.src = element.imageUrl;
+    ModalImg.alt = element.title;
+
+    imageContainer.appendChild(deletedBtn);
+    deletedBtn.className = "deleted";
+
+    deletedBtn.addEventListener("click", () => {
+      deletedWork(element.id);
+    });
   });
+};
+
+const toggleDropdown = () => {
+  var dropdownContent = document.getElementById("myDropdown");
+  if (dropdownContent.style.display === "block") {
+    dropdownContent.style.display = "none";
+  } else {
+    dropdownContent.style.display = "block";
+  }
+};
+
+const choisirOption = (option, categoryId) => {
+  result.innerText = option;
+  myDropdown.style.display = "none";
+  console.log("jai cliquer sur", categoryId);
+  verifierValeurs(categoryId);
+};
+
+const createDropdownOptions = () => {
+  const dropdown = document.getElementById("myDropdown");
+  dropdown.innerHTML = "";
+
+  categories.forEach((category) => {
+    const option = document.createElement("button");
+    option.className = "ModalSelectedCategorie";
+    option.textContent = category.name;
+
+    option.addEventListener("click", () => {
+      choisirOption(category.name, category.id);
+    });
+
+    dropdown.appendChild(option);
+  });
+};
+
+const modalCloseFunction = () => {
+  modal.className = "DisplayOff";
+  modalContainer1.className = "modalContainer";
+  modalContainer2.className = "DisplayOff";
 };

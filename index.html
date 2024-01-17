@@ -17,7 +17,7 @@
   </head>
   <body>
     <header>
-    <div id="EditMode" class="DiplayOff">
+    <div id="EditMode" class="DisplayOff">
     </div>
     <div class="head">
       <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
@@ -72,9 +72,9 @@
             <input type="submit" class="selected" value="Tous" id="FilterAll"></input>
           </div>
         </div>
-        <div id="modal" class="DiplayOff">
-          <div class="modalContainer">
-            <button class="modalClose">
+        <div id="modal" class="DisplayOff">
+          <div id="modalContainer1" class="modalContainer">
+            <button id="modalClose1" class="modalClose">
               <i class="fa-solid fa-xmark" ></i>
             </button>
             <p class="modalTitle">Galerie photo</p>
@@ -82,7 +82,41 @@
             <hr>
             <input type="submit" value="Ajouter une photo" class="AddPicture">
           </div>
+          <div id="modalContainer2" class="DisplayOff">
+            <div class="ModalBtn">
+          <button id="ModalBack" class="ModalBack">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+            <button id="modalClose2" class="modalClose">
+              <i class="fa-solid fa-xmark" ></i>
+            </button>
+            </div>
+            <p class="modalTitle">Ajout photo</p>
+            <div>
+              <div id="ImgSelected" class="DisplayOff">
+                <img id="previewImage" src="" alt="Preview Image" class="ImgSelected">
+              </div>
+              <div id="SelecteImg" class="ModalAddFile" >
+                <i class="fa-regular fa-image"></i>
+                <label for="ModalAddFile" class="ModalAddFileBtn">+ Ajouter photo</label>
+                <input id="ModalAddFile" type="file" class="DisplayOff">
+                <p class="ModalText">jpg, png : 4mo max</p>
+              </div>
+            </div>
+            <p class="modalTitle2">Titre</p>
+            <input type="text" class="ModalAddTitle">
+            <p class="modalTitle2">Catégorie</p>
+              <div class="ModalDropdown">
+                <div class="ButtonContainer">
+                 <button class="ModalSelectedCategorie" id="result"></button>
+                 <i class="fa-solid fa-chevron-down" id="icon"></i>
+                </div>
+                <div class="ModalDropdownContent" id="myDropdown"></div>
+              </div>
+            <hr>
+            <input type="submit" value="Valider" class="ModalValidate">
           </div>
+        </div>
         <div class="gallery"></div>
       </section>
       <section id="contact">

@@ -26,7 +26,7 @@ const login = (user) => {
         sessionStorage.setItem("token", JSON.stringify(data.token));
         document.location.href = "index.html";
       } else {
-        console.error("Les informations d'identification sont incorrectes");
+        console.error("Erreur dans l’identifiant ou le mot de passe");
         alert("Erreur dans l’identifiant ou le mot de passe");
       }
     });
