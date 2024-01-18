@@ -135,6 +135,7 @@ AddPicture.addEventListener("click", () => {
   ModalAddTitle.value = "";
   result.innerText = "";
   ModalValidate.className = "ModalValidate";
+  ModalValidate.id = "";
 });
 
 ModalBack.addEventListener("click", () => {
@@ -152,6 +153,10 @@ const ImgSelected = document.getElementById("ImgSelected");
 
 ModalAddFile.addEventListener("change", (event) => {
   const selectedFile = event.target.files[0];
+
+  if (previewImage.src) {
+    URL.revokeObjectURL(previewImage.src);
+  }
 
   if (selectedFile) {
     if (selectedFile.type.startsWith("image/")) {
@@ -238,25 +243,19 @@ function verifierValeurs(categoryId) {
   if (ModalValidated) {
     ModalValidated.addEventListener("click", () => {
       console.log("j'ai cliquer sur validate");
-      const AddElement = {
-        id: 0,
-        image: null,
-        title: ModalAddTitle.value,
-        category: categoryId,
-        userId: 0,
-      };
-
-      const requestBody = JSON.stringify(AddElement);
+      const formData = new FormData();
+      formData.append("image", ModalAddFile.files[0]);
+      formData.append("title", titleValue);
+      formData.append("category", categoryId);
+      formData.append("userId", 0);
 
       fetch("http://localhost:5678/api/works", {
         method: "POST",
-        accept: "application/json",
+        body: formData,
         headers: {
-          "Content-Type": "multipart/form-data",
           Authorization:
             "Bearer " + JSON.parse(sessionStorage.getItem("token")),
         },
-        body: requestBody,
       })
         .then((response) => {
           console.log("Réponse de l'API:", response);
@@ -264,11 +263,13 @@ function verifierValeurs(categoryId) {
         })
         .then((data) => {
           console.log(data);
+          modalCloseFunction();
+          getworks();
+          getModalWorks();
         })
         .catch((error) => {
           console.error("Erreur lors de l'appel à l'API:", error);
         });
-      modalCloseFunction();
     });
   }
 }

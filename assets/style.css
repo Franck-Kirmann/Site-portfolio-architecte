@@ -402,6 +402,7 @@ header .EditMode {
 }
 
 .ModalImg {
+  object-fit: cover;
   width: 76px;
   height: 102px;
   padding: 5px;
