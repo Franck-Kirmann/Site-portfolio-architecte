@@ -118,8 +118,32 @@ const displayModalworks = () => {
     imageContainer.appendChild(deletedBtn);
     deletedBtn.className = "deleted";
 
+    const DivDeletedWork = document.getElementById("DivDeletedWork");
+    const PreviewDeletedImg = document.querySelector(".PreviewDeletedImg");
+    const annuler = document.getElementById("annuler");
+    const confirmer = document.getElementById("confirmer");
+    deletedBtn.dataset.workId = element.id;
+    let currentWorkId;
+
     deletedBtn.addEventListener("click", () => {
-      deletedWork(element.id);
+      currentWorkId = deletedBtn.dataset.workId;
+      PreviewDeletedImg.innerHTML = `<img src=${element.imageUrl} alt=${element.title} class="DeleteImg">
+        <figcaption>Confirmez la suppression de cette image : ${element.title}</figcaption>`;
+      DivDeletedWork.className = "DivDeletedWork";
+      console.log(currentWorkId);
+    });
+
+    annuler.addEventListener("click", () => {
+      PreviewDeletedImg.innerHTML = "";
+      DivDeletedWork.className = "DisplayOff";
+    });
+
+    confirmer.addEventListener("click", () => {
+      if (currentWorkId) {
+        deletedWork(currentWorkId);
+        currentWorkId = null;
+        DivDeletedWork.className = "DisplayOff";
+      }
     });
   });
 };
@@ -151,6 +175,7 @@ const createDropdownOptions = () => {
 
     option.addEventListener("click", () => {
       choisirOption(category.name, category.id);
+      CatId = category.id;
     });
 
     dropdown.appendChild(option);
@@ -162,3 +187,12 @@ const modalCloseFunction = () => {
   modalContainer1.className = "modalContainer";
   modalContainer2.className = "DisplayOff";
 };
+
+function AddWorks(CatId) {
+  const formData = new FormData();
+  formData.append("image", ModalAddFile.files[0]);
+  formData.append("title", ModalAddTitle.value);
+  formData.append("category", CatId);
+  console.log("test", CatId);
+  addworksApi(formData);
+}

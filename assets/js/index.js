@@ -1,20 +1,9 @@
 //gallery
-let Works = [];
-
 const gallery = document.querySelector(".gallery");
-const getworks = () => {
-  fetch("http://localhost:5678/api/works/")
-    .then((res) => res.json())
-    .then((data) => {
-      Works = data;
-      displayworks();
-    });
-};
 
 getworks();
 
 //filtre
-let categories = [];
 
 const filter = document.querySelector(".categories");
 
@@ -33,7 +22,7 @@ FilterAll.addEventListener("click", (input) => {
 
   FilterAll.classList.add("selected");
 });
-
+getcategories();
 //login
 const EditMode = document.getElementById("EditMode");
 const logoutBtn = document.getElementById("logoutBtn");
@@ -50,16 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
   } else {
     console.log("offline");
     diplayEditModeOff();
-    const getcategories = () => {
-      fetch("http://localhost:5678/api/categories")
-        .then((cat) => cat.json())
-        .then((datacat) => {
-          categories = datacat;
-          createInputElements();
-        });
-    };
     logout();
-    getcategories();
     modifierOff();
     ProjetsOff();
   }
@@ -97,29 +77,6 @@ modalClose2.addEventListener("click", function () {
   modalCloseFunction();
 });
 
-const getModalWorks = () => {
-  fetch("http://localhost:5678/api/works/")
-    .then((res) => res.json())
-    .then((data) => {
-      Works = data;
-      displayModalworks();
-    });
-};
-getModalWorks();
-
-const deletedWork = (id) => {
-  fetch("http://localhost:5678/api/works/" + id, {
-    method: "DELETE",
-    headers: {
-      Authorization: "Bearer " + JSON.parse(sessionStorage.getItem("token")),
-    },
-  }).then((reponse) => {
-    console.log(reponse);
-    getworks();
-    getModalWorks();
-  });
-};
-
 const modalContainer1 = document.getElementById("modalContainer1");
 const modalContainer2 = document.getElementById("modalContainer2");
 const AddPicture = document.querySelector(".AddPicture");
@@ -135,7 +92,7 @@ AddPicture.addEventListener("click", () => {
   ModalAddTitle.value = "";
   result.innerText = "";
   ModalValidate.className = "ModalValidate";
-  ModalValidate.id = "";
+  ModalValidate.disabled = true;
 });
 
 ModalBack.addEventListener("click", () => {
@@ -198,24 +155,14 @@ window.onclick = function (event) {
   }
 };
 
-const getInputModalcategories = () => {
-  fetch("http://localhost:5678/api/categories")
-    .then((cat) => cat.json())
-    .then((datacat) => {
-      categories = datacat;
-      createDropdownOptions();
-    });
-};
-
-getInputModalcategories();
-
 const optionchoice = document.querySelector("optionchoice");
 const ModalValidate = document.querySelector(".ModalValidate");
 
-function verifierValeurs(categoryId) {
+function verifierValeurs() {
   if (ModalAddFile.files.length === 0) {
     console.error("Veuillez sélectionner un fichier.");
     ModalValidate.className = "ModalValidate";
+    ModalValidate.disabled = true;
     return;
   }
 
@@ -223,6 +170,7 @@ function verifierValeurs(categoryId) {
   if (titleValue === "") {
     console.error("Veuillez entrer un titre.");
     ModalValidate.className = "ModalValidate";
+    ModalValidate.disabled = true;
     return;
   }
 
@@ -230,49 +178,17 @@ function verifierValeurs(categoryId) {
   if (resultValue === "") {
     console.error("Veuillez sélectionner une catégorie.");
     ModalValidate.className = "ModalValidate";
+    ModalValidate.disabled = true;
     return;
   }
-
   console.log("Toutes les valeurs sont correctes.");
   ModalValidate.className = "ModalValidate ModalValidated";
-  ModalValidate.id = "ModalValidated";
-  const ModalValidated = document.getElementById("ModalValidated");
-  console.log(ModalAddTitle.value);
-  console.log(categoryId);
-
-  if (ModalValidated) {
-    ModalValidated.addEventListener("click", () => {
-      console.log("j'ai cliquer sur validate");
-      const formData = new FormData();
-      formData.append("image", ModalAddFile.files[0]);
-      formData.append("title", titleValue);
-      formData.append("category", categoryId);
-      formData.append("userId", 0);
-
-      fetch("http://localhost:5678/api/works", {
-        method: "POST",
-        body: formData,
-        headers: {
-          Authorization:
-            "Bearer " + JSON.parse(sessionStorage.getItem("token")),
-        },
-      })
-        .then((response) => {
-          console.log("Réponse de l'API:", response);
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data);
-          modalCloseFunction();
-          getworks();
-          getModalWorks();
-        })
-        .catch((error) => {
-          console.error("Erreur lors de l'appel à l'API:", error);
-        });
-    });
-  }
+  ModalValidate.disabled = false;
 }
 
 ModalAddFile.addEventListener("input", verifierValeurs);
 ModalAddTitle.addEventListener("input", verifierValeurs);
+
+ModalValidate.addEventListener("click", () => {
+  AddWorks(CatId);
+});

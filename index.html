@@ -78,6 +78,13 @@
               <i class="fa-solid fa-xmark" ></i>
             </button>
             <p class="modalTitle">Galerie photo</p>
+            <div id="DivDeletedWork" class="DisplayOff">
+              <div class="PreviewDeletedImg"></div>
+              <div>
+                 <button id="annuler" class="DeltedChoice">Annuler la suppression</button> 
+                  <button id="confirmer" class="DeltedChoice confirmer">Confirmer la suppression</button>
+              </div>
+            </div>
             <div class="ModalGallery"></div>
             <hr>
             <input type="submit" value="Ajouter une photo" class="AddPicture">
@@ -114,7 +121,7 @@
                 <div class="ModalDropdownContent" id="myDropdown"></div>
               </div>
             <hr>
-            <input type="submit" value="Valider" class="ModalValidate">
+            <input type="submit" value="Valider" disabled class="ModalValidate">
           </div>
         </div>
         <div class="gallery"></div>
@@ -141,6 +148,7 @@
         </ul>
       </nav>
     </footer>
+        <script src="assets/js/api.js"></script>
     <script src="assets/js/function.js"></script>
     <script src="assets/js/index.js"></script>
   </body>
