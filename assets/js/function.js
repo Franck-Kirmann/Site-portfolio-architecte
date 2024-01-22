@@ -87,12 +87,10 @@ const ProjetsOff = () => {
   Projets.className = "";
 };
 const modifierOn = () => {
-  modifier.innerHTML = `<button class="ModifierBtn"><i class="fa-regular fa-pen-to-square"></i><pan>modifier</span></button>`;
   modifier.style.display = "inline-block";
 };
 
 const modifierOff = () => {
-  modifier.innerHTML = "";
   modifier.style.display = "none";
 };
 
